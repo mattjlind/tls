@@ -1,0 +1,5 @@
+LIBRARY wm_https
+EXPORTS
+    wm_https_get
+    wm_https_request
+    wm_tls_exchange
