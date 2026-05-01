@@ -1,0 +1,22 @@
+# Visual Studio user/state files
+*.ncb
+*.suo
+*.user
+
+# VS C++/linker intermediates and outputs
+*.obj
+*.idb
+*.pdb
+*.exp
+*.lib
+*.dll
+*.exe
+
+# Build logs
+**/BuildLog.htm
+
+# Smart Device output folders
+/tls/Windows Mobile 6 Professional SDK (ARMV4I)/
+/tls/Pocket PC 2003 (ARMV4)/
+/tls/Pocket PC 2003 (x86)/
+/tls/Windows Mobile 5.0 Pocket PC SDK (ARMV4I)/
