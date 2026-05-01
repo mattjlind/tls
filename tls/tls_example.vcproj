@@ -357,7 +357,7 @@
 				StackCommitSize="4096"
 				RandomizedBaseAddress="0"
 				DataExecutionPrevention="0"
-				TargetMachine="3"
+				TargetMachine="0"
 			/>
 			<Tool
 				Name="VCALinkTool"

@@ -90,13 +90,13 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPWSTR lpCmd, int nShow)
 
     if (p_get == NULL || p_req == NULL || p_tls == NULL) {
         if (p_get == NULL) {
-            p_get = (wm_https_get_fn)GetProcAddress(h, (LPCSTR)1);
+            p_get = (wm_https_get_fn)GetProcAddressA(h, (LPCSTR)1);
         }
         if (p_req == NULL) {
-            p_req = (wm_https_request_fn)GetProcAddress(h, (LPCSTR)2);
+            p_req = (wm_https_request_fn)GetProcAddressA(h, (LPCSTR)2);
         }
         if (p_tls == NULL) {
-            p_tls = (wm_tls_exchange_fn)GetProcAddress(h, (LPCSTR)3);
+            p_tls = (wm_tls_exchange_fn)GetProcAddressA(h, (LPCSTR)3);
         }
 
         if (p_get != NULL && p_req != NULL && p_tls != NULL) {
