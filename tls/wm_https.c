@@ -43,7 +43,7 @@ wm_https_connect_ipv4(const char *host, unsigned short port, SOCKET *out_sock, i
         *out_wsa_error = 0;
     }
 
-    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
+    if (WSAStartup(MAKEWORD(1, 1), &wsa) != 0) {
         if (out_wsa_error != 0) {
             *out_wsa_error = WSAGetLastError();
         }

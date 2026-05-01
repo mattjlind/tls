@@ -7,18 +7,35 @@ This project builds `wm_https.dll`, which exposes a small C API for:
 - Generic HTTPS requests (custom method/headers/body)
 - Raw TLS text exchange (for simple protocol scripting)
 
-## Output
+## Projects in Solution
 
-When built for `Windows Mobile 6 Professional SDK (ARMV4I)`, outputs are under:
-- `tls\Windows Mobile 6 Professional SDK (ARMV4I)\Release\wm_https.dll`
-- `tls\Windows Mobile 6 Professional SDK (ARMV4I)\Release\wm_https.lib`
-- `tls\wm_https.h` (public header)
+- `tls` (DLL): builds `wm_https.dll` + `wm_https.lib`
+- `tls_example` (EXE): direct HTTPS sample client using the static API
+- `dll_smoketest` (EXE): `LoadLibrary`/`GetProcAddress` smoke test for `wm_https.dll`
+
+## Platform/Config Notes
+
+The solution now contains:
+- `Pocket PC 2003 (ARMV4)`
+- `Windows Mobile 5.0 Pocket PC SDK (ARMV4I)`
+- `Windows Mobile 6 Professional SDK (ARMV4I)`
+
+### WM2003 compatibility settings
+
+For `Pocket PC 2003 (ARMV4)` builds, these settings are important:
+- CE target macros: `_WIN32_WCE=420`, `WINVER=0x0420`
+- Stack cookie disabled for WM2003 only: `/GS-`
+- Linker subsystem forced: `/SUBSYSTEM:WINDOWSCE,4.20`
+- ARM machine forced to avoid Thumb loader issues on WM2003: `/MACHINE:ARM` (`TargetMachine=3`)
+
+WM5/WM6 configs keep `/GS` enabled.
 
 ## Build
 
 1. Open `tls.sln` in Visual Studio 2008.
-2. Select configuration `Release` and platform `Windows Mobile 6 Professional SDK (ARMV4I)`.
-3. Build the `tls` project.
+2. Select your target configuration/platform.
+3. For WM2003 device/emulator (ARM): use `Pocket PC 2003 (ARMV4)`.
+4. Build the `tls` project.
 
 ## Public API
 
@@ -71,6 +88,18 @@ int wm_tls_exchange(
 3. Deploy `wm_https.dll` with your executable on device/emulator.
 4. Ensure `ws2.lib` is available in your build (the DLL itself already uses Winsock internally).
 
+## Runtime smoke test for DLL loading
+
+Use project `dll_smoketest` when troubleshooting deploy/runtime failures.
+
+It verifies:
+- `LoadLibrary("wm_https.dll")`
+- `GetProcAddress("wm_https_get")`
+- `GetProcAddress("wm_https_request")`
+- `GetProcAddress("wm_tls_exchange")`
+
+Then it runs one HTTPS request and shows detailed status in a message box.
+
 ## Example: HTTPS GET
 
 ```c
@@ -108,4 +137,5 @@ Defined in `tls\wm_https.def`:
 
 ## Test app
 
-`tls\main_example.c` contains a WinCE sample (`WinMain`) that calls `wm_https_get` against several hosts and shows results in a message box.
+- `tls\main_example.c`: sample app used by `tls_example`
+- `tls\dll_smoketest_main.c`: dynamic-load smoke test used by `dll_smoketest`
